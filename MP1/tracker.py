@@ -148,13 +148,27 @@ def update_task(index: int, name: str, description:str, due: str):
 def mark_done(index):
     """ Updates a single task, via index, to a done datetime"""
     # find task from list by index
-    # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # if it's not done, record the current datetime as the value
-    # if it is done, print a message saying it's already completed
-    # make sure save() is still called last in this function
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    if index in range(len(tasks)):
+        task = tasks[index]
+        if task['done'] == False:  # if it's not done, record the current datetime as the value
+            task['done'] = datetime.now()
+            task['lastActivity'] = datetime.now()
+            print("task completed")
+        else:
+            # if it is done, print a message saying it's already completed
+            print("task completed already")
+    else:
+        # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+        print("invalid index")
 
+    # make sure save() is still called last in this function
     save()
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # UCID - vg473; date :02/20/23;
+    # mark_done() does following things,
+    #   - if index is out of range, then a message invalid index is shown
+    #   - if index is valid and task is not done, done and lastActivity are updated with current timestamp and task completed message is printed
+    #   - if index is valid and task done value is not False, task completed message is printed
 
 def view_task(index):
     """ View more info about a specific task fetch by index """
