@@ -173,17 +173,22 @@ def mark_done(index):
 def view_task(index):
     """ View more info about a specific task fetch by index """
     # find task from list by index
-    # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # utilize the given print statement when a task is found
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    task = {}
-    print(f"""
+    if index in range(len(tasks)):
+        task = tasks[index]
+        # utilize the given print statement when a task is found
+        print(f"""
         [{'x' if task['done'] else ' '}] Task: {task['name']}\n 
         Description: {task['description']} \n 
         Last Activity: {task['lastActivity']} \n
         Due: {task['due']}\n
         Completed: {task['done'] if task['done'] else '-'} \n
         """.replace('  ', ' '))
+    else:
+        # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+        print("Index is out of range,please enter valid number")
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # UCID - vg473; date :02/20/23;
+    # view_task() picks and displays the task based on index value if the index is valid else an error message is printed 
 
 
 def delete_task(index):
