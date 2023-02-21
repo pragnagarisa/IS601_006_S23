@@ -193,13 +193,19 @@ def view_task(index):
 
 def delete_task(index):
     """ deletes a task from the tasks list by index """
-    # delete/remove task from list by index
-    # message should show if it was successful or not
-    # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+    if index in range(len(tasks)):
+        del tasks[index]  # delete/remove task from list by index
+        # message should show if it was successful or not
+        print(f'''Task #{index+1} Deleted successful''')
+    else:
+        # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+        print("Index is out of range,please enter valid number")
     # make sure save() is still called last in this function
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    
+
     save()
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # UCID - vg473; date :02/20/23;
+    # delete_task() delete the task from tasks based index values if valid else it will print an error message
 
 def get_incomplete_tasks():
     """ prints a list of tasks that are not done """
