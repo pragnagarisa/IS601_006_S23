@@ -89,15 +89,26 @@ def add_task(name: str, description: str, due: str):
 
 def process_update(index):
     """ extracted the user input prompts to get task data then passes it to update_task() """
-    # get the task by index
-    # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # show the existing value of each property where the TODOs are marked in the text of the inputs (replace the TODO related text)
+
+    if index in range(len(tasks)):  # get the task by index
+        task = tasks[index]
+        # show the existing value of each property where the TODOs are marked in the text of the inputs (replace the TODO related text)
+        name = input(f"What's the name of this task? (TODO name) \n").strip()
+        desc = input(
+            f"What's a brief descriptions of this task? (TODO description) \n").strip()
+        due = input(
+            f"When is this task due (format: m/d/y H:M:S) (TODO due) \n").strip()
+        print(f"updated name:", name)
+        print(f"updated description:", desc)
+        print(f"updated due date:", due)
+        update_task(index, name=name, description=desc, due=due)
+    else:
+        # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+        print("Invalid Index Number")
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    
-    name = input(f"What's the name of this task? (TODO name) \n").strip()
-    desc = input(f"What's a brief descriptions of this task? (TODO description) \n").strip()
-    due = input(f"When is this task due (format: m/d/y H:M:S) (TODO due) \n").strip()
-    update_task(index, name=name, description=desc, due=due)
+    # UCID - vg473; date :02/20/23;
+    # process_update() checks whether the given is in tasks or not. 
+    # if it is in tasks range, it reads update_task() function variables; else printing an error message
 
 def update_task(index: int, name: str, description:str, due: str):
     """ Updates the name, description , due date of a task found by index if an update to the property was provided """
