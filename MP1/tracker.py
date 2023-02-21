@@ -21,6 +21,18 @@ def str_to_datetime(datetime_str):
     except:
         return datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
 
+# diff_in_secs takes in two timestamps and calculate the time difference in seconds
+def diff_in_secs(dt2, dt1):
+    timedelta = dt2 - dt1
+    return timedelta.days * 24 * 3600 + timedelta.seconds
+
+# format_time_diff takes in seconds and converts them into days, hours, minutes, seconds
+def format_time_diff(seconds):
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    return (abs(days), abs(hours), abs(minutes), abs(seconds))
+
 def save():
     """ writes the tasks list to a json file to persist changes """
     f = open("tracker.json", "w")
@@ -246,12 +258,34 @@ def get_overdue_tasks():
 def get_time_remaining(index):
     """ outputs the number of days, hours, minutes, seconds a task has before it's overdue otherwise shows similar info for how far past due it is """
     # get the task by index
-    # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # get the days, hours, minutes, seconds between the due date and now
+
     # display the remaining time via print in a clear format showing days, hours, minutes, seconds
     # if the due date is in the past print out how many days, hours, minutes, seconds the task is over due (clearly note that it's over due, values should be positive)
+    if index < 0 or index > len(tasks):
+        # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+        print("Index is out of range or invalid. Please try again")
+    else:
+        # get the days, hours, minutes, seconds between the due date and now
+        task = tasks[index]
+        task_due_datetime = str_to_datetime(task['due'])
+        days, hours, minutes, seconds = format_time_diff(diff_in_secs(
+            task_due_datetime, datetime.now()))
+
+        if (task_due_datetime > datetime.now()):
+            print(
+                f'''\nRemaining time: {days} days, {hours} hours, {minutes} minutes, {seconds} seconds''')
+        else:
+            print(
+                f'''\nOver due by: {days} days, {hours} hours, {minutes} minutes, {seconds} seconds''')
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    task = {}
+    # UCID - vg473; date :02/20/23;
+    # get_time_remaining() does following things,
+    #   - if index is invalid, prints an error message
+    #   - if index is valid, we find the task and change the due string to datetime format - task_due_datetime. 
+    #       task_due_datetime is then compared with current timestamp to get the difference 
+    #       I have used two functions, diff_in_secs() which gives me the seconds difference between two datetimes and
+    #       format_time_diff() which converts those seconds into days, hours, minutes, seconds with abs().
+    #   - at the end, if due is before current time, we print it as remaining time and if due is after current time we print it as over due by
 
 # no changes needed below this line
 
