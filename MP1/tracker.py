@@ -113,14 +113,37 @@ def process_update(index):
 def update_task(index: int, name: str, description:str, due: str):
     """ Updates the name, description , due date of a task found by index if an update to the property was provided """
     # find the task by index
-    # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+    if index < 0 or index >= len(tasks):
+        # consider index out of bounds scenarios and include appropriate message(s) for invalid index
+        print("Invalid Index")
+        return
+
+    task = tasks[index].copy()
     # update incoming task data if it's provided (if it's not provided use the original task property value)
+    if name:
+        task['name'] = name
+    if description:
+        task['description'] = description
+    if due:
+        task['due'] = due
     # update lastActivity with the current datetime value
-    # output that the task was updated if any items were changed, otherwise mention task was not updated
-    # make sure save() is still called last in this function
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    
-    save()
+    task['lastActivity'] = datetime.now()
+
+    if name != tasks[index]['name'] or description != tasks[index]['description'] or due != tasks[index]['due']:
+        tasks[index] = task
+        # output that the task was updated if any items were changed, otherwise mention task was not updated
+        print("task updated")
+        # make sure save() is still called last in this function
+        save()
+    else:
+        print("Task not updated - Input values already match existing task details")
+   # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+   # UCID - vg473; date :02/20/23;
+   # update_task() get the value for the process_update(),
+   #  - if index value is less than zero or greater than or equal to len(tasks) it prints invalid index
+   #  - if index value is valid, it checks given name,description,due are valid and compare them with the old values, 
+   #    if new values aren't matching old values, prints a message that the task is updated and saves updated task to tasks
+   #    if new values are same as old, it prints a message task not updated.
 
 def mark_done(index):
     """ Updates a single task, via index, to a done datetime"""
