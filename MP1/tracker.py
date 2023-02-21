@@ -55,13 +55,37 @@ def add_task(name: str, description: str, due: str):
     """ Copies the TASK_TEMPLATE and fills in the passed in data then adds the task to the tasks list """
     task = TASK_TEMPLATE.copy() # don't delete this
     # update lastActivity with the current datetime value
-    # set the name, description, and due date (all must be provided)
-    # due date must match one of the formats mentioned in str_to_datetime()
-    # add the new task to the tasks list
-    # output a message confirming the new task was added or if the addition was rejected due to missing data
-    # make sure save() is still called last in this function
+    lastActivity = datetime.now()
+    try:
+        if len(name) == 0:
+            raise Exception("Task name is missing")
+        if len(description) == 0:
+            raise Exception("Task description is missing")
+        if len(due) == 0:
+            raise Exception("Task due date is missing")
+        # set the name, description, and due date (all must be provided)
+        task = {
+            "name": name,
+            "description": description,
+            # due date must match one of the formats mentioned in str_to_datetime()
+            "due": str_to_datetime(due),
+            "lastActivity": lastActivity,
+            "done": False
+        }
+        task_copy = task.copy()
+        tasks.append(task_copy)  # add the new task to the tasks list
+        # output a message confirming the new task was added or if the addition was rejected due to missing data
+        print(f'''Task: {task["name"]} is added to the list''')
+        # make sure save() is still called last in this function
+        save()
+    except Exception as e:
+        print("Something else went wrong:", e)
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    save()
+    # UCID - vg473; date :02/20/23;
+    # add_task() takes in name, description, due as arguments. When any of these argument has an empty string or due is in incorrect format
+    # I'm raising an exception with approriate message that is caught and error message is shown to the user. When the data is entered correctly, 
+    # the add_task() will convert due string to datetime format and update template task with provided arguments, 
+    # and then add it to the list and save it to tracker.json file
 
 def process_update(index):
     """ extracted the user input prompts to get task data then passes it to update_task() """
