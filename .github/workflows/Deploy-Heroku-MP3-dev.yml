@@ -8,6 +8,7 @@ on:
     branches:
       - dev
       - mp3-dev
+      - MiniProject-3
 
 # Your workflows jobs.
 jobs:
