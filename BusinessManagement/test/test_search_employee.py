@@ -44,7 +44,7 @@ def get_cell_content_by_index(index, table):
 def query_and_get_assert(query, args, target, client, url):
     from ..sql.db import DB
     result = DB.selectAll(query, *args)
-    print('res - ', result, query, args)
+    print('gg - ', result, query, args, url)
     if result.status and result.rows:
         n = result.rows[0][target]
         print("db result", n)
@@ -90,12 +90,12 @@ def test_filter_company(client):
     from ..sql.db import DB
     result = DB.selectOne("SELECT id FROM IS601_MP3_Companies ORDER BY RAND() LIMIT 1")
     args = [2]
-    if result.status and result.row:
+    if result.status and len(result.row):
         args[0] = int(result.row["id"])
     query = "SELECT IF(name is not null, name,'N/A') as company_name FROM IS601_MP3_Employees e JOIN IS601_MP3_Companies c ON e.company_id = c.id WHERE e.company_id = %s LIMIT 10"
     target = "company_name"
     url = f"/employee/search?company={args[0]}"
-    print('new args - ', url)
+    print('new args - ', url, result)
     query_and_get_assert(query=query, args=args, target=target, client=client, url=url)
 
 
