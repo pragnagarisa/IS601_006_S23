@@ -2,7 +2,6 @@ import glob
 import os
 
 
-
 from db import DB
 print(os.path.dirname(os.path.abspath(__file__)))
 mypath = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +15,7 @@ for f in files:
             "sql": file.read()
         })
 # sort in prefix order
-queries = sorted(queries, key=lambda x:x["file"].lower())
+queries = sorted(queries, key=lambda x: x["file"].lower())
 # check if anything can be blocked to save query runs
 tables = DB.selectAll("SHOW TABLES")
 existing_tables = []
@@ -34,9 +33,9 @@ for q in queries:
     # block existing tables to save queries (we have a quota of 10k per hour)
     if "CREATE TABLE" in sql.upper():
         t = sql.split("(")[0] \
-        .replace("CREATE TABLE","") \
-        .replace("\n","") \
-        .strip()
+            .replace("CREATE TABLE", "") \
+            .replace("\n", "") \
+            .strip()
         if t in existing_tables:
             print(f"Table {t} already exists, blocking query")
             continue

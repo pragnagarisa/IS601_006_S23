@@ -44,7 +44,7 @@ class LoginForm(AuthForm):
                 raise ValidationError("Invalid email address")
         else:
             is_valid_username(email)
-            
+    
         return True
                 
 class ProfileForm(AuthForm):
