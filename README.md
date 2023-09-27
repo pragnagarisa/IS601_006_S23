@@ -1,3 +1,3 @@
 # IS601_websystems
-#Pragna
-#I am pragna garisa from Information System, first semester
+
+E-Commerce Web App Project for coursework IS601 Web Systems.
